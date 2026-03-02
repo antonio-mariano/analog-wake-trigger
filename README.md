@@ -15,20 +15,12 @@ This allows the Raspberry Pi Pico W (or any compatible microcontroller) to remai
 
 ![Overview](images/overview.gif)
 
-<p align="center">
-  <img src="docs/images/overview.gif" width="600">
-</p>
-
-
-
 High‑level operation:
 
 - The module continuously monitors the velostat sensors.
 - When movement is detected, it generates a pulse of approximately 1 second (configurable).
 - This pulse wakes the microcontroller, which performs a full sensor reading (as in the original *sleep-monitor*) and then returns to sleep.
 - The microcontroller can temporarily place the velostat sensors in high impedance from the module so they can be read without interference.
-
-**BLOCK_DIAGRAM**
 
 A detailed explanation of the internal circuit is available in:  
 👉 `docs/design_notes.md`
