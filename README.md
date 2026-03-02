@@ -2,27 +2,28 @@
 
 A compact analog module that monitors the velostat pressure sensors from the **sleep-monitor** project and generates a digital wake signal whenever movement is detected.  
 It was designed specifically to integrate with the *sleep-monitor* system  
-(https://github.com/antonio-mariano/sleep-monitor), but it can also be used in similar frameworks or as a standalone movement detector.
+in https://github.com/antonio-mariano/sleep-monitor, but it can also be used in similar frameworks or as a standalone movement detector.
 
 ---
 
 ## 📌 Overview
 
 In the original *sleep-monitor*, the microcontroller must stay awake to continuously read the sensors, which leads to high power consumption.  
-The **analog-wake-trigger** solves this limitation by acting as a low‑power motion sentinel that consumes only **~3 mA** while continuously monitoring the sensors.
+The **analog-wake-trigger** solves this limitation by acting as a low‑power motion sentinel that consumes only **3 mA** while continuously monitoring the sensors.
 
-This allows the Raspberry Pi Pico W (or any compatible microcontroller) to remain in deep‑sleep mode and wake only when relevant motion occurs.
-
-![Overview](images/overview.gif)
+This allows the Raspberry Pi Pico W (or any microcontroller) to remain in deep‑sleep mode and wake only when relevant motion occurs.
 
 High‑level operation:
 
-- The module continuously monitors the velostat sensors.
-- When movement is detected, it generates a pulse of approximately 1 second (configurable).
-- This pulse wakes the microcontroller, which performs a full sensor reading (as in the original *sleep-monitor*) and then returns to sleep.
+- 1 - The module continuously monitors the velostat sensors.
+- 2 - When movement is detected, it generates a pulse of 1 second (configurable).
+- 3 - This pulse wakes the microcontroller, which performs a full sensor reading (as in the original *sleep-monitor*) and then returns to sleep.
 - The microcontroller can temporarily place the velostat sensors in high impedance from the module so they can be read without interference.
 
-A detailed explanation of the internal circuit is available in:  
+![Overview](images/overview.gif)
+
+
+A detailed explanation of the internal circuit **will** be available in:  
 👉 `docs/design_notes.md`
 
 ---
