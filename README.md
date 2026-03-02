@@ -13,6 +13,14 @@ The **analog-wake-trigger** solves this limitation by acting as a low‑power mo
 
 This allows the Raspberry Pi Pico W (or any compatible microcontroller) to remain in deep‑sleep mode and wake only when relevant motion occurs.
 
+![Overview](images/overview.gif)
+
+<p align="center">
+  <img src="docs/images/overview.gif" width="600">
+</p>
+
+
+
 High‑level operation:
 
 - The module continuously monitors the velostat sensors.
