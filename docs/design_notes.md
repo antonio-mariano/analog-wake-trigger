@@ -1,59 +1,63 @@
 # Design Notes
 
-This document provides the design rationale and internal operation of the **analog-wake-trigger** module.  
-While the main README focuses on usability and integration, this file explains *how* the circuit works and *why* specific design choices were made.
+This document explains the design rationale and internal operation of the **analog‑wake‑trigger** module.  
+While the main README focuses on usage and integration, this file describes *how* the circuit works and *why* specific design choice was made.
 
 ---
 
 ## System Overview
 
 ### The circuit performs five main functions:
-- 1 High‑pass filtering of the velostat sensor signals  
-- 2 Amplification
-- 3 Threshold detection using comparators  
-- 4 Generation of a clean, fixed‑duration digital pulse using a monostable 555
-- 5 Put the sensors in high impedance, since the MCU must be able to read the sensors without interference from the module
+1. High‑pass filtering of the velostat sensor signals  
+2. Amplification of filtered signals
+3. Threshold cross detection using comparators  
+4. Generation of a clean, fixed‑duration digital pulse using a monostable NE555  
+5. Switching the sensors into a high‑impedance state so the MCU can read them without interference from the module  
 
-Additionally, it has to generate some voltage references for operation, exmplained in
-- 6 Voltage References
+Additionally, the circuit must generate several internal voltage references, described in:
+
+6. Voltage References
+
 ---
 
-## 1. High-Pass Filtering
-### Design goals:
+## 1. High‑Pass Filtering
+
+### Design goals
 - Cutoff frequency high enough to ignore breathing  
 - Low enough to detect body movement  
-- Minimal component count
+- Minimal component count  
 
-### Design notes:
-- The base capacitor with the BJT amplifier forms a filter, with a (LTSpice simulation) cutoff frequency of about 1.2 Hz, wich worked well in the real circuit
-- The colector signal needs then to be centered at Vref/2 to be in the middle point between Vt+ and Vt- (threshold to the comparators)
-- This is done with the decoupling 10uF capacitor with the 470k-470k divider, that forms another filter
-- This 2nd stage filter needs to have cutoff frequency << 1.2 Hz, because we want to keep a first order behaviour 
-- The cuttoff frequency of that 2nd stage is Fc = 1/(2pi*235k * 10uF) = 0.07 Hz
-- In practie it only moves the DC value to Vref/2, keeping the desired 1st order behaviour
+### Design notes
+- The base capacitor together with the BJT amplifier forms a high‑pass filter with a simulated cutoff frequency of about 1.2 Hz, which matched real‑world behavior.
+- The collector signal must then be centered at Vref/2 so it sits halfway between Vt+ and Vt− (the comparator thresholds).
+- This is achieved using a 10 µF coupling capacitor and a 470 kΩ–470 kΩ divider, which form a second high‑pass stage.
+- This second stage must have a cutoff frequency much lower than 1.2 Hz to preserve a first‑order response.
+- Its cutoff frequency is Fc = 1/(2pi*235kΩ * 10uF) = 0.07 Hz.
 
 ---
 
 ## 2. Amplification Stage (NPN Transistor)
-### Design goals:
-- A BJT amplifier was chosen instead of OpAmp because it's simpler and avoids the use of dual-supply source, allowing direct power from the MCU
-- A RC voltage divider could be used to simulate a middle point OpAmp ground, but since we are dealing with such low frequencies, the C would be huge, so the BJT amplifer avoids that
 
-### Design notes:
-- The purpose of the amplification is to increase space between Vt+ and Vt- (view Voltage References section), so any resistor mismatch between the Vref generation (10k - Potentiometer - 10k) and the DC reference for the HPF (470k - 470k) isn't critic
+### Design goals
+- A BJT amplifier was chosen instead of an op‑amp because it is simpler and avoids the need for a dual‑supply rail, allowing direct power from the MCU.
+- A virtual ground using an RC divider could emulate an op‑amp midpoint, but at such low frequencies the required capacitor would be very large. The BJT amplifier avoids this issue.
+
+### Design notes
+- The purpose of the amplification is to increase the separation between Vt+ and Vt− (see section 6. Voltage References), so small mismatches between the Vref divider (10 kΩ – 10 kΩ potentiometer – 10 kΩ) and the HPF reference divider (470 kΩ – 470 kΩ) are not critical.
 
 ---
 
-## 3. Comparators and Diode OR-Gate
-### Design goals:
-- The LM393 was chosen becouse it is wildly available, and operates from 3V supply, allowing to be supplied from 3.3V and 5V MCUs/boards.
-- Also it is open-collector, making it ideal for the diodes OR logic-gate that comes next.
+## 3. Comparators and Diode OR‑Gate
 
-### Design notes:
-- The resting input signal is at Vref/2
-- the middle point betweeh Vt+ and Vt- is always Vref/2 (ignoring resistor mismatch)
-- Whenever the signal overcomes Vt+ or Vt-, the respective comparator puts its output in LOW state (~0V)
-- Any comparator output in LOW state makes the respective diode conduct and puts Vtrig at LOW (~0.7V), therefore acting like an OR logic gate
+### Design goals
+- The LM393 was chosen because it is widely available and operates from a 3 V supply, making it compatible with both 3.3 V and 5 V MCUs.
+- Its open‑collector outputs make it ideal for the diode‑OR logic stage that follows.
+
+### Design notes
+- The resting input signal sits at Vref/2.
+- The midpoint between Vt+ and Vt− is also Vref/2 (ignoring resistor mismatch).
+- Whenever the signal exceeds Vt+ or drops below Vt−, the corresponding comparator pulls its output LOW (~0 V).
+- Any LOW output forward‑biases its diode and pulls Vtrig LOW (~0.7 V), effectively implementing an OR logic gate.
 
 ---
 
@@ -61,33 +65,37 @@ Additionally, it has to generate some voltage references for operation, exmplain
 
 Movement events are often short and irregular. To ensure the microcontroller reliably wakes, the comparator output triggers a **monostable NE555**.
 
-The 555 generates:
-
+The 555 provides:
 - A clean digital pulse  
-- Fixed duration (adjustable: T = 1.1 * 470k * 1uF ~= 0.5s)  
+- Fixed duration (adjustable; with 470 kΩ and 1 µF, T = 1.1RC ≈ 0.5 s)  
 - Output independent of input pulse width  
 
-This ensures the system remains robust even with noisy or brief motion events
+This guarantees reliable MCU wake‑up even with noisy or brief motion events.
 
-## 5. High Impedance circuit
+---
 
-- The sensors are powered throw a PNP transistor at Vcc and a NPN at GND.
-- When these transistors are ON, the sensors are powered ON, creating voltage dividers.
-- When these transistors are OFF, the sensors are effectively disconnected from the power supply
-- Since the PNP base is active at LOW, and the NPN base activates at high, an aditional NPN is used as an inverter, so the EN signal (controlled by the MCU) can activate both transistors at the same time
+## 5. High‑Impedance Sensor Switching
 
+- The sensors are powered through a PNP transistor on Vcc and an NPN transistor on GND.
+- When these transistors are ON, the sensors are powered and form voltage dividers.
+- When they are OFF, the sensors are effectively disconnected from the supply and become high‑impedance.
+- Because the PNP is active‑LOW and the NPN is active‑HIGH, an additional NPN transistor is used as an inverter so the MCU’s EN signal can switch both devices simultaneously.
+
+---
 
 ## 6. Voltage References
 
 ### Vref
-- The LM393 comparator only accepts inputs that go from 0 to Vcc-2 V. The purpose of Vref is to generate a voltage reference that makes comparation voltages below Vcc-2V.
-- The base of the BJT is at Vcc*18/(10+18) = 0.64*Vcc, and for very small current Vbe_on = 0.5 V, so Vref = 0.64Vcc - 0.5
+- The LM393 only accepts input voltages between 0 V and Vcc − 2 V.  
+  Vref ensures that all comparison thresholds remain within this valid range.
+- The BJT base is biased at [18/(10+18)] * Vcc = 0.64*Vcc
+- With a small base current, Vbe ~= 0.5V, so Vref = 0.64Vcc - 0.5
+- Vref(Vcc=3.3) = 1.6V
+- Vref(Vcc=5)  =  2.7V
+  
 
-### Vt+ and Vt-
-- These are the comparation (threshold) voltages. When the amplified signal is above Vtresh+ or below Vt-, the respecive comparator output goes low.
-- Because of the 10k voltage divider with 10k potentiometer, Vt+ is at maximum 2/3 of Vref, so below Vcc-2 for Vcc = 3.3V (or above)
+### Vt+ and Vt−
+- These are the comparator thresholds. When the amplified signal rises above Vt+ or falls below Vt−, the corresponding comparator output goes LOW.
+- With the 10 kΩ – 10 kΩ potentiometer – 10 kΩ divider, Vt+ can reach at most two‑thirds of Vref, ensuring it stays below Vcc − 2 V for Vcc = 3.3 V (or higher).
 
-
-
-
-
+---
