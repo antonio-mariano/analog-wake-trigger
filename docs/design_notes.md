@@ -28,7 +28,7 @@ Additionally, the circuit must generate several internal voltage references, des
 - Minimal component count  
 
 ### Design notes
-- The base capacitor together with the BJT amplifier forms a high‑pass filter with a simulated cutoff frequency of about 1.2 Hz, which matched real‑world behavior.
+- The base capacitor together with the BJT amplifier forms a high‑pass filter with a simulated cutoff frequency of about 1.2 Hz, which worked well with the real circuit.
 - The collector signal must then be centered at Vref/2 so it sits halfway between Vt+ and Vt− (the comparator thresholds).
 - This is achieved using a 10 µF coupling capacitor and a 470 kΩ–470 kΩ divider, which form a second high‑pass stage.
 - This second stage must have a cutoff frequency much lower than 1.2 Hz to preserve a first‑order response.
@@ -99,3 +99,4 @@ This guarantees reliable MCU wake‑up even with noisy or brief motion events.
 - With the 10 kΩ – 10 kΩ potentiometer – 10 kΩ divider, Vt+ can reach at most two‑thirds of Vref, ensuring it stays below Vcc − 2 V for Vcc = 3.3 V (or higher).
 
 ---
+
