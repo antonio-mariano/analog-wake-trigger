@@ -67,6 +67,8 @@ The circuit was design no minimize component count and type whenever possible
 
 ## 🔌 Circuit Assembly
 
+![Circuit Schematic KiCad](images/schematic.png)
+
 The module is composed of several analog stages that process the velostat signals and generate a clean digital wake pulse.  
 These stages include filtering, amplification, threshold detection, and monostable pulse generation.
 
