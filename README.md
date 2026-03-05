@@ -76,4 +76,12 @@ A detailed explanation of the circuit architecture, design rationale, and the an
 
 ![Circuit Schematic KiCad](images/schematic.png)
 
+![Real circuit assembly (breadboard)](images/circuit.jpg)
+
 ---
+## 🚀 Practical Demonstration
+
+To visualize the module in action, an LED was added to the MCU board to indicate when the analog‑wake‑trigger detects movement and wakes the microcontroller.
+
+![Real demonstration video](images/demo.gif)
+
