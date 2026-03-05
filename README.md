@@ -31,12 +31,12 @@ High‑level operation:
 
 ## ✨ Features
 
-- **Compatible with both 3.3 V and 5 V microcontrollers**, allowing direct power from the MCU.
-- **Low power consumption (~3 mA)**, suitable for battery‑powered systems.
+- Compatible with both **3.3 V and 5 V** microcontrollers, allowing direct power from the MCU.
+- **Low power consumption** (~3 mA), suitable for battery‑powered systems.
 - **Generates a clean digital pulse** to wake a microcontroller from deep sleep.
 - **Adjustable detection threshold** via potentiometer for sensitivity tuning.
-- **Designed as a companion module for the sleep-monitor project.**
-- **Can also operate as a standalone movement detector**, where the pulse simply indicates “movement detected”.
+- Designed as a **companion module** for the sleep-monitor project.
+- Can also operate as a **standalone movement detector**, where the pulse simply indicates “movement detected”.
 
 ---
 
