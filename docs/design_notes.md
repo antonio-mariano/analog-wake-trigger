@@ -3,6 +3,8 @@
 This document explains the design rationale and internal operation of the **analog‑wake‑trigger** module.  
 While the main README focuses on usage and integration, this file describes *how* the circuit works and *why* specific design choice was made.
 
+![Real circuit image](images/anotated_circuit.jpg)
+
 ---
 
 ## System Overview
@@ -103,5 +105,6 @@ This guarantees reliable MCU wake‑up even with noisy or brief motion events.
 - With the 10 kΩ – 10 kΩ potentiometer – 10 kΩ divider, Vt+ can reach at most two‑thirds of Vref, ensuring it stays below Vcc − 2 V for Vcc = 3.3 V (or higher).
 
 ---
+
 
 
