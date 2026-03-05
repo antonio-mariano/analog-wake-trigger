@@ -40,14 +40,28 @@ High‑level operation:
 
 ---
 
-## 🧩 Components
+## 🧩 Components (BOM List)
 
-- Velostat pressure sensor matrix from the *sleep-monitor* project (or any resistive sensors arranged in a 2×2 matrix).
+The circuit was design no minimize component count and type whenever possible
+
+- Velostat pressure sensor matrix from the [*sleep-monitor*](https://github.com/antonio-mariano/sleep-monitor) project (or any resistive sensors arranged in a 2×2 matrix)
 - 5× BC337 (NPN) transistors  
 - 1× BC327 (PNP) transistor  
 - 2× LM393 comparators  
-- 1× NE555 timer in monostable configuration  
-- Resistors, capacitors, and a potentiometer  
+- 1× NE555 timer
+
+- 2x 1.5kOhm resistors
+- 8x 10kOhm resistors
+- 4x 18kOhm resistors
+- 4x 450kOhm resistors
+- 2x 1.2 MOhm resistors
+- 1x 10k Potentiometer
+
+- 1x 0.01 uF capacitor
+- 3x 1uF capacitor
+- 2x 10 uF capacitor
+
+- 4x 1N4148 diode
 
 ---
 
