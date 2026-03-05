@@ -76,7 +76,7 @@ A detailed explanation of the circuit architecture, design rationale, and the an
 
 ![Circuit Schematic KiCad](images/schematic.png)
 
-![Real circuit assembly (breadboard)](images/circuit.jpg)
+![Real circuit assembly (breadboard)](images/anotated_circuit.jpg)
 
 ---
 ## 🚀 Practical Demonstration
