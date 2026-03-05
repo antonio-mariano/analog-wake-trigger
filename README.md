@@ -1,8 +1,12 @@
 # Analog Wake Trigger – Low‑Power Motion Detector for the *sleep-monitor* Project
 
-A compact analog module that monitors the velostat pressure sensors from the **sleep-monitor** project and generates a digital wake signal whenever movement is detected.  
-It was designed specifically to integrate with the *sleep-monitor* system  
-in https://github.com/antonio-mariano/sleep-monitor, but it can also be used in similar frameworks or as a standalone movement detector.
+A compact analog module that monitors the velostat pressure sensors used in the **sleep-monitor** project and generates a clean digital wake signal whenever movement is detected.  
+Although designed specifically for integration with [antonio-mariano/sleep-monitor](https://github.com/antonio-mariano/sleep-monitor), the module can also be used in similar systems or as a standalone movement detector.
+
+This README focuses on circuit assembly, usage, and integration.  
+A detailed explanation of the circuit architecture, design rationale, and the analog techniques behind it is available at:
+👉 [docs/design_notes.md](https://github.com/antonio-mariano/analog-wake-trigger/blob/main/docs/design_notes.md)
+
 
 ---
 
@@ -11,7 +15,7 @@ in https://github.com/antonio-mariano/sleep-monitor, but it can also be used in 
 In the original *sleep-monitor*, the microcontroller must stay awake to continuously read the sensors, which leads to high power consumption.  
 The **analog-wake-trigger** solves this limitation by acting as a low‑power motion sentinel that consumes only **3 mA** while continuously monitoring the sensors.
 
-This allows the Raspberry Pi Pico W (or any microcontroller) to remain in deep‑sleep mode and wake only when relevant motion occurs.
+This allows the microcontroller (MCU) to remain in deep‑sleep mode and wake only when relevant motion occurs.
 
 High‑level operation:
 
@@ -22,9 +26,6 @@ High‑level operation:
 
 ![Overview](images/overview.gif)
 
-
-A detailed explanation of the internal circuit **will** be available in:  
-👉 `docs/design_notes.md`
 
 ---
 
