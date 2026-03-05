@@ -1,4 +1,9 @@
-# Analog Wake Trigger – Low‑Power Motion Detector for the *sleep-monitor* Project
+# Analog Wake Trigger – Low‑Power Motion Detector for the *sleep‑monitor* Project
+
+<p align="center">
+  <img src="https://img.shields.io/badge/KiCad-EDA-orange" alt="KiCad Badge">
+  <img src="https://img.shields.io/badge/LTspice-Simulation-red" alt="LTspice Badge">
+</p>
 
 A **compact analog module** that monitors the velostat pressure sensors used in the **[github.com/antonio-mariano/sleep-monitor](https://github.com/antonio-mariano/sleep-monitor)** project and generates a clean digital wake signal whenever movement is detected.  
 
