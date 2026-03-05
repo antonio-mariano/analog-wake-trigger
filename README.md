@@ -43,28 +43,24 @@ High‑level operation:
 
 The circuit was designed to minimize component count and use common, easy‑to‑source parts.
 
-**Sensor**
-- Pressure sensor from [*sleep-monitor*](https://github.com/antonio-mariano/sleep-monitor) (or any resistive sensors arranged in a 2×2 matrix)  
+| Category        | Component / Value        | Qty |
+|-----------------|---------------------------|-----|
+| **Sensor**      | Velostat matrix (2×2)     | 1   |
+| **Semiconductors** | BC337 (NPN)               | 5   |
+|                 | BC327 (PNP)               | 1   |
+|                 | 1N4148 diode              | 4   |
+|                 | LM393 comparator          | 2   |
+|                 | NE555 timer               | 1   |
+| **Resistors**   | 1.5 kΩ                    | 2   |
+|                 | 10 kΩ                     | 7   |
+|                 | 18 kΩ                     | 4   |
+|                 | 470 kΩ                    | 5   |
+|                 | 1.2 MΩ                    | 2   |
+|                 | 10 kΩ potentiometer       | 1   |
+| **Capacitors**  | 0.01 µF                   | 1   |
+|                 | 1 µF                      | 3   |
+|                 | 10 µF                     | 2   |
 
-**Semiconductors**
-- 5× BC337 (NPN)
-- 1× BC327 (PNP)
-- 4× 1N4148 (Diode)
-- 2× LM393 (Comparator IC)
-- 1× NE555 (Timer IC)
-
-**Resistors**
-- 2× 1.5 kΩ
-- 8× 10 kΩ
-- 4× 18 kΩ
-- 4× 450 kΩ
-- 2× 1.2 MΩ
-- 1× 10 kΩ potentiometer
-
-**Capacitors**
-- 1× 0.01 µF
-- 3× 1 µF
-- 2× 10 µF
 
 
 ---
