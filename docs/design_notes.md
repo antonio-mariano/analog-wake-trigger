@@ -34,6 +34,8 @@ Additionally, the circuit must generate several internal voltage references, des
 - This second stage must have a cutoff frequency much lower than 1.2 Hz to preserve a first‑order response.
 - Its cutoff frequency is Fc = 1/(2pi*235kΩ * 10uF) = 0.07 Hz.
 
+![High-Pass filter](images/filter_freq_resp.png)
+
 ---
 
 ## 2. Amplification Stage (NPN Transistor)
@@ -58,6 +60,8 @@ Additionally, the circuit must generate several internal voltage references, des
 - The midpoint between Vt+ and Vt− is also Vref/2 (ignoring resistor mismatch).
 - Whenever the signal exceeds Vt+ or drops below Vt−, the corresponding comparator pulls its output LOW (~0 V).
 - Any LOW output forward‑biases its diode and pulls Vtrig LOW (~0.7 V), effectively implementing an OR logic gate.
+
+![Comparator](images/comparator.png)
 
 ---
 
@@ -99,4 +103,5 @@ This guarantees reliable MCU wake‑up even with noisy or brief motion events.
 - With the 10 kΩ – 10 kΩ potentiometer – 10 kΩ divider, Vt+ can reach at most two‑thirds of Vref, ensuring it stays below Vcc − 2 V for Vcc = 3.3 V (or higher).
 
 ---
+
 
